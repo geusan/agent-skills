@@ -7,6 +7,8 @@ description: Migrate an existing Flutter application toward the architecture use
 
 Refactor an existing Flutter app incrementally. Never replace its `lib/`, `test/`, pubspec, or native folders with the reference repository. The reference defines architectural responsibilities; the target project's behavior and integrations remain authoritative.
 
+Resolve `skill_root` to the directory containing this `SKILL.md` before running bundled scripts. Bundled paths are relative to `skill_root`, never to the target Flutter project's working directory.
+
 ## Establish context
 
 Resolve the target Flutter project and the Clean Architecture ref. Default the ref to `main` so every migration run fetches the current repository. Use a branch, tag, or commit when the user requests reproducibility.
@@ -19,7 +21,7 @@ Before editing:
 
    ```bash
    reference_root="$(mktemp -d /tmp/flutter-clean-arch-reference.XXXXXX)"
-   ./scripts/fetch_clean_arch_reference.sh \
+   "$skill_root/scripts/fetch_clean_arch_reference.sh" \
      --output "$reference_root/checkout" \
      --ref main
    ```
@@ -28,7 +30,7 @@ Before editing:
 5. Run the inventory helper and inspect its JSON rather than relying on directory names alone:
 
    ```bash
-   ./scripts/inventory_flutter_project.py /absolute/path/to/app
+   "$skill_root/scripts/inventory_flutter_project.py" /absolute/path/to/app
    ```
 
 Keep the fetched checkout outside the target repository and remove only that known temporary directory after recording the resolved commit.
@@ -58,7 +60,7 @@ Do not copy the reference chat sample, localhost endpoint, credentials, native p
 After each slice, format changed Dart files and run the narrowest relevant tests. Then run the layer check:
 
 ```bash
-./scripts/check_layer_dependencies.py /absolute/path/to/app
+"$skill_root/scripts/check_layer_dependencies.py" /absolute/path/to/app
 ```
 
 Treat reported forbidden internal imports as migration work; do not suppress them. The script accepts the reference's legacy `services -> di.dart` pattern, but prefer constructor injection for newly migrated code unless strict parity requires service-locator access.

@@ -1,0 +1,16 @@
+{
+  "name": "flutter-clean-arch",
+  "version": "0.1.0",
+  "description": "Bootstrap new Flutter apps or migrate existing apps toward geusan/flutter-clean-arch.",
+  "author": {
+    "name": "geusan"
+  },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": [
+    "flutter",
+    "clean-architecture",
+    "bootstrap",
+    "migration"
+  ]
+}

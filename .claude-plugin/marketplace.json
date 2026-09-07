@@ -1,0 +1,14 @@
+{
+  "name": "geusan-flutter",
+  "description": "Flutter clean-architecture skills maintained by geusan.",
+  "owner": {
+    "name": "geusan"
+  },
+  "plugins": [
+    {
+      "name": "flutter-clean-arch",
+      "source": "./plugins/flutter-clean-arch",
+      "description": "Bootstrap new Flutter apps or migrate existing apps toward clean architecture."
+    }
+  ]
+}

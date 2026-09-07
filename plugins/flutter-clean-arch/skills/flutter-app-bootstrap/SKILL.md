@@ -7,6 +7,8 @@ description: Create a new development-ready Flutter application by fetching and 
 
 Create a fresh, buildable Flutter application whose identifiers are correct from the first native project generation. Fetch both source repositories at runtime so the result records and applies their resolved commits.
 
+Resolve `skill_root` to the directory containing this `SKILL.md` before running bundled scripts. Bundled paths are relative to `skill_root`, never to the target Flutter project's working directory.
+
 ## Collect the immutable inputs
 
 Resolve these before creating native files:
@@ -27,7 +29,8 @@ Read [references/architecture.md](references/architecture.md) before creating or
 Use the bundled bootstrap script for a new target:
 
 ```bash
-./scripts/bootstrap_flutter_app.sh \
+skill_root="/absolute/path/to/flutter-app-bootstrap"
+"$skill_root/scripts/bootstrap_flutter_app.sh" \
   --name sample_app \
   --org com.example \
   --dir /absolute/path/to/sample_app \
