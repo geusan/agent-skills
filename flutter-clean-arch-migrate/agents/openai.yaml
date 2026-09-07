@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Clean Architecture Migration"
+  short_description: "기존 Flutter 앱을 클린 아키텍처로 점진적 전환"
+  default_prompt: "Use $flutter-clean-arch-migrate to migrate this existing Flutter project toward the referenced clean architecture without changing behavior."

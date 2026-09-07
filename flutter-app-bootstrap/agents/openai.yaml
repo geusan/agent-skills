@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter App Bootstrap"
+  short_description: "클린 아키텍처와 Fastlane 기반 Flutter 앱 초기화"
+  default_prompt: "Use $flutter-app-bootstrap to initialize a development-ready Flutter app with clean architecture and optional Fastlane setup."
