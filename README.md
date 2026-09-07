@@ -6,6 +6,7 @@ The `flutter-clean-arch` plugin includes:
 
 - `flutter-app-bootstrap`: create a new Flutter app from `geusan/flutter-clean-arch`, with optional Fastlane preparation.
 - `flutter-clean-arch-migrate`: incrementally migrate an existing Flutter app while preserving behavior and integrations.
+- `flutter-firebase-analytics`: add a facade-based Firebase Analytics integration, design a measurement plan, validate collection, and analyze GA4 or BigQuery events.
 
 ## Install in Codex
 
@@ -26,6 +27,10 @@ $flutter-clean-arch:flutter-app-bootstrap Create a mobile app named sample_app w
 $flutter-clean-arch:flutter-clean-arch-migrate Migrate the current Flutter project without changing behavior.
 ```
 
+```text
+$flutter-clean-arch:flutter-firebase-analytics Add Firebase Analytics behind a facade and design the events needed to measure activation.
+```
+
 ## Install in Claude Code
 
 ```bash
@@ -41,6 +46,10 @@ Start a new Claude Code session or run `/reload-plugins`, then invoke a bundled 
 
 ```text
 /flutter-clean-arch:flutter-clean-arch-migrate Migrate the current Flutter project without changing behavior.
+```
+
+```text
+/flutter-clean-arch:flutter-firebase-analytics Analyze the checkout funnel from the available GA4 or BigQuery event data.
 ```
 
 ## Local development

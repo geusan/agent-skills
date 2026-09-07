@@ -1,7 +1,7 @@
 {
   "name": "flutter-clean-arch",
-  "version": "0.1.0",
-  "description": "Bootstrap new Flutter apps or migrate existing apps toward geusan/flutter-clean-arch.",
+  "version": "0.2.0+codex.20260907111729",
+  "description": "Bootstrap or migrate Flutter apps and add facade-based Firebase Analytics with measurement and analysis workflows.",
   "author": {
     "name": "geusan",
     "url": "https://github.com/geusan"
@@ -12,13 +12,15 @@
     "flutter",
     "clean-architecture",
     "bootstrap",
-    "migration"
+    "migration",
+    "firebase",
+    "analytics"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Flutter Clean Architecture",
-    "shortDescription": "Bootstrap or migrate Flutter apps with clean architecture.",
-    "longDescription": "Create a development-ready Flutter app from geusan/flutter-clean-arch, or incrementally migrate an existing Flutter project while preserving behavior and integrations.",
+    "shortDescription": "Build, migrate, and measure clean Flutter applications.",
+    "longDescription": "Create or migrate Flutter apps with clean architecture, then add a Firebase Analytics facade, design a measurement plan, validate collection, and analyze GA4 or BigQuery events.",
     "developerName": "geusan",
     "category": "Productivity",
     "capabilities": [
@@ -27,7 +29,8 @@
     ],
     "defaultPrompt": [
       "Bootstrap a new Flutter app with clean architecture.",
-      "Migrate this Flutter app toward clean architecture without changing behavior."
+      "Migrate this Flutter app toward clean architecture without changing behavior.",
+      "Add facade-based Firebase Analytics and design an actionable event plan."
     ]
   }
 }

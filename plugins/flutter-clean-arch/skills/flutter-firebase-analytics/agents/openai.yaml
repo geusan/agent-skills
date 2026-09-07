@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Firebase Analytics"
+  short_description: "Add and analyze Firebase Analytics for Flutter"
+  default_prompt: "Use $flutter-firebase-analytics to add a facade-based analytics pipeline and analyze its events."

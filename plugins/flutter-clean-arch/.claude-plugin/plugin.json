@@ -1,7 +1,7 @@
 {
   "name": "flutter-clean-arch",
-  "version": "0.1.0",
-  "description": "Bootstrap new Flutter apps or migrate existing apps toward geusan/flutter-clean-arch.",
+  "version": "0.2.0",
+  "description": "Bootstrap or migrate Flutter apps and add facade-based Firebase Analytics with measurement and analysis workflows.",
   "author": {
     "name": "geusan"
   },
@@ -11,6 +11,8 @@
     "flutter",
     "clean-architecture",
     "bootstrap",
-    "migration"
+    "migration",
+    "firebase",
+    "analytics"
   ]
 }
