@@ -1,6 +1,6 @@
 {
   "name": "geusan-flutter",
-  "description": "Flutter clean-architecture skills maintained by geusan.",
+  "description": "Flutter architecture, analytics, and App Store review skills maintained by geusan.",
   "owner": {
     "name": "geusan"
   },
@@ -9,6 +9,11 @@
       "name": "flutter-clean-arch",
       "source": "./plugins/flutter-clean-arch",
       "description": "Bootstrap new Flutter apps or migrate existing apps toward clean architecture."
+    },
+    {
+      "name": "app-store",
+      "source": "./plugins/app-store",
+      "description": "Prepare App Store reviews, Fastlane uploads, privacy disclosures, and release settings."
     }
   ]
 }

@@ -1,0 +1,35 @@
+{
+  "name": "app-store",
+  "version": "0.1.0",
+  "description": "Prepare and verify iOS App Store reviews, Fastlane uploads, privacy disclosures, and release settings.",
+  "author": {
+    "name": "geusan",
+    "url": "https://github.com/geusan"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "App Store Review",
+    "shortDescription": "Prepare App Store metadata, privacy, and releases.",
+    "longDescription": "Prepare iOS App Store reviews using actual build evidence, Fastlane workflows, privacy disclosures, content rights, age ratings, and release settings.",
+    "developerName": "geusan",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Prepare this app for App Store review using the current release build.",
+      "Explain the correct App Store Connect selections using verified app behavior."
+    ]
+  },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": [
+    "ios",
+    "app-store",
+    "testflight",
+    "fastlane",
+    "privacy",
+    "app-review"
+  ]
+}

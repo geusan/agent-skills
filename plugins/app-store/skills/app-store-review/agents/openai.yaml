@@ -1,0 +1,4 @@
+interface:
+  display_name: "App Store 심사 준비"
+  short_description: "Fastlane 배포부터 개인정보·연령 등급·심사 제출 준비까지"
+  default_prompt: "Use $app-store-review to inspect this app and complete the authorized App Store review preparation with verified metadata and disclosure answers."
