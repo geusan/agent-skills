@@ -1,6 +1,6 @@
 # Agent Skills
 
-Reusable Flutter, Go, and Next.js development and App Store review workflows packaged for both Codex and Claude Code.
+Reusable Flutter, Go, Next.js, relational database design, and App Store review workflows packaged for both Codex and Claude Code.
 
 The `flutter-clean-arch` plugin includes:
 
@@ -25,6 +25,13 @@ The `nextjs-clean-arch` plugin includes:
 - `nextjs-clean-arch`: review existing code without changes or incrementally refactor it while preserving routes, behavior, API contracts, and the established stack. Does not impose the starter's router, styling, or testing tools on an existing app.
 
 Request `Next.js 프론트엔드 만들어줘` to initialize, then `로그인 화면 추가해줘` to add a feature. All three skills allow implicit selection; in mixed Go/Next.js projects they distinguish frontend work from backend endpoints. `vite test` is implemented as **Vitest**; the app still uses Next.js for development and production builds.
+
+The `rdb-design` plugin includes:
+
+- `design-database`: design PostgreSQL/MySQL/MariaDB data models, map them to the existing ORM/migration workflow, and maintain versioned Mermaid ERDs with optional SVG exports.
+- `review-database`: inspect relationships, constraints, indexes, queries, migration impact, and consistency between the ERD, ORM, native migrations, and any authorized database snapshot. Read-only unless fixes are requested.
+
+Both skills allow implicit selection for database design, ERD documentation, and schema review requests. They coordinate with the owning implementation skill without adding an independent migration system.
 
 The `app-store` plugin includes:
 
@@ -52,6 +59,19 @@ $nextjs-clean-arch:nextjs-clean-arch 기존 동작을 유지하면서 상품 목
 
 In Claude Code, use `/go-clean-arch:go-clean-arch` or `/nextjs-clean-arch:nextjs-clean-arch` with the same request.
 
+## Database diagrams and code ownership
+
+Business requirements guide the logical design. The project's existing ORM/schema and migration process define the implementation, and the ERD documents an explicitly labeled proposal, code target, or database snapshot. In Go + Next.js projects where Go owns persistence, migrations stay in the Go project.
+
+By default, `docs/database/erd.md` contains Mermaid code that GitHub renders as a diagram. Keep source paths, engine/version, and details that an ERD cannot represent beside the diagram. Optional SVGs and their render manifest live in `docs/database/diagrams/`; edit the Mermaid source and regenerate those images. Use an existing diagram format/exporter if the project already has one.
+
+The renderer's `--check` detects stale source/image pairs only. The review skill separately checks whether the diagram actually agrees with the ORM and effective migrations. Neither check proves which migrations are deployed without environment evidence.
+
+```text
+기존 ORM 기준으로 회원·조직 관계를 설계하고 ERD 코드와 그림으로 남겨줘.
+ERD와 ORM 모델, 마이그레이션 사이 불일치를 코드 수정 없이 점검해줘.
+```
+
 ## Install in Codex
 
 Add this repository as a marketplace and install the plugin:
@@ -61,6 +81,7 @@ codex plugin marketplace add geusan/agent-skills
 codex plugin add flutter-clean-arch@personal
 codex plugin add go-clean-arch@personal
 codex plugin add nextjs-clean-arch@personal
+codex plugin add rdb-design@personal
 codex plugin add app-store@personal
 ```
 
@@ -95,6 +116,11 @@ $nextjs-clean-arch:add-nextjs-feature 상품 목록 화면을 기존 API와 연�
 ```
 
 ```text
+$rdb-design:design-database 기존 ORM과 마이그레이션 구조를 유지하면서 ERD를 작성해줘.
+$rdb-design:review-database ERD와 실제 스키마 정의의 일치 여부를 점검해줘.
+```
+
+```text
 $app-store:app-store-review 이 앱의 App Store 심사 준비 상태를 확인하고, 한국어 메타데이터와 개인정보 신고를 준비해줘.
 ```
 
@@ -105,6 +131,7 @@ claude plugin marketplace add geusan/agent-skills
 claude plugin install flutter-clean-arch@geusan-flutter
 claude plugin install go-clean-arch@geusan-flutter
 claude plugin install nextjs-clean-arch@geusan-flutter
+claude plugin install rdb-design@geusan-flutter
 claude plugin install app-store@geusan-flutter
 ```
 
@@ -139,6 +166,11 @@ Start a new Claude Code session or run `/reload-plugins`, then invoke a bundled 
 ```
 
 ```text
+/rdb-design:design-database Document this schema as a versioned ERD using the existing ORM mappings.
+/rdb-design:review-database Review the ORM, migrations, and ERD without changing them.
+```
+
+```text
 /app-store:app-store-review Explain the correct selections in this App Store Connect screenshot using the actual release build.
 ```
 
@@ -150,6 +182,7 @@ Test the Claude Code plugin directly from this repository:
 claude --plugin-dir ./plugins/flutter-clean-arch
 claude --plugin-dir ./plugins/go-clean-arch
 claude --plugin-dir ./plugins/nextjs-clean-arch
+claude --plugin-dir ./plugins/rdb-design
 ```
 
 Validate the plugin manifests:
@@ -158,6 +191,7 @@ Validate the plugin manifests:
 claude plugin validate ./plugins/flutter-clean-arch
 claude plugin validate ./plugins/go-clean-arch
 claude plugin validate ./plugins/nextjs-clean-arch
+claude plugin validate ./plugins/rdb-design
 claude plugin validate ./plugins/app-store
 ```
 
@@ -195,3 +229,12 @@ application files to the destination. It reports resolved versions and keeps
 the npm lockfile. Generated app checks are `npm run lint`, `npm run typecheck`,
 `npm test`, and `npm run build`. Vitest separates Node unit tests from jsdom
 component tests; async Server Components need runtime/integration or E2E checks.
+
+Test the ERD exporter and freshness checks (Python 3.9+; unit tests use a local fake renderer):
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover \
+  -s plugins/rdb-design/skills/design-database/scripts -p 'test_*.py'
+```
+
+For SVG rendering and project-level checks, see the bundled [ERD workflow](plugins/rdb-design/skills/design-database/references/erd-workflow.md). The helper uses the project's Mermaid CLI or an explicitly selected temporary CLI; GitHub's inline Mermaid view needs no local renderer.

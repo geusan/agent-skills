@@ -1,0 +1,6 @@
+interface:
+  display_name: "Review Database and ERD"
+  short_description: "Review schema, ORM, migrations, and ERD consistency"
+  default_prompt: "Use $review-database to inspect the database design, ORM models, migrations, and ERD without modifying them."
+policy:
+  allow_implicit_invocation: true

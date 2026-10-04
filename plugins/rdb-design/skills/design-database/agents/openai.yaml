@@ -1,0 +1,6 @@
+interface:
+  display_name: "Design Database and ERD"
+  short_description: "Design RDB schemas with ORM-aligned, versioned ERDs"
+  default_prompt: "Use $design-database to design this relational schema and maintain a version-controlled ERD aligned with the existing ORM and migration workflow."
+policy:
+  allow_implicit_invocation: true

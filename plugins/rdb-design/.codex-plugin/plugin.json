@@ -1,0 +1,25 @@
+{
+  "name": "rdb-design",
+  "version": "0.1.0",
+  "description": "Design and review PostgreSQL, MySQL, and MariaDB schemas with ORM-aligned, version-controlled ERDs and optional SVG exports.",
+  "author": {
+    "name": "geusan",
+    "url": "https://github.com/geusan"
+  },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": ["database", "postgresql", "mysql", "mariadb", "orm", "erd", "mermaid", "schema-review"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "RDB Design and Review",
+    "shortDescription": "Design and review ORM-aligned schemas and visual ERDs.",
+    "longDescription": "Design relational models, document them as version-controlled Mermaid ERDs, render optional SVGs, and review agreement with existing ORM models and native migrations without adding another migration system.",
+    "developerName": "geusan",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": [
+      "Design this database feature using the existing ORM and create a versioned ERD.",
+      "Review the ERD, ORM models, and migration history without modifying them."
+    ]
+  }
+}

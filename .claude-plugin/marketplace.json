@@ -1,6 +1,6 @@
 {
   "name": "geusan-flutter",
-  "description": "Flutter, Go, and Next.js architecture, analytics, and App Store review skills maintained by geusan.",
+  "description": "Flutter, Go, Next.js, relational database design, analytics, and App Store review skills maintained by geusan.",
   "owner": {
     "name": "geusan"
   },
@@ -19,6 +19,11 @@
       "name": "nextjs-clean-arch",
       "source": "./plugins/nextjs-clean-arch",
       "description": "Initialize, extend, review, and incrementally refactor Next.js applications with clean architecture."
+    },
+    {
+      "name": "rdb-design",
+      "source": "./plugins/rdb-design",
+      "description": "Design and review relational schemas and versioned ERDs using the existing ORM and migration workflow."
     },
     {
       "name": "app-store",
