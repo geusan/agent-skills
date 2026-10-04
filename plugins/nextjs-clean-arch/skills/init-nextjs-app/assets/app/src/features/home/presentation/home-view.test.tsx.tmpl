@@ -1,0 +1,20 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { expect, test } from "vitest";
+import { HomeView } from "@/features/home/presentation/home-view";
+
+test("reveals and hides the next steps through an accessible button", async () => {
+  const user = userEvent.setup();
+  render(<HomeView />);
+
+  expect(screen.getByRole("heading", { level: 1, name: "Your app is ready." })).toBeVisible();
+  const content = screen.getByText(/Describe the first feature/);
+  expect(content).not.toBeVisible();
+
+  await user.click(screen.getByRole("button", { name: "Show next steps" }));
+  expect(content).toBeVisible();
+  expect(screen.getByRole("button", { name: "Hide next steps" })).toHaveAttribute("aria-expanded", "true");
+
+  await user.click(screen.getByRole("button", { name: "Hide next steps" }));
+  expect(content).not.toBeVisible();
+});

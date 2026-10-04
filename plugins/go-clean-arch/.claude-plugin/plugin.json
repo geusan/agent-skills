@@ -1,0 +1,11 @@
+{
+  "name": "go-clean-arch",
+  "version": "0.2.0",
+  "description": "Initialize Go servers, add features through clean architecture layers, and review or migrate existing backends.",
+  "author": {
+    "name": "geusan"
+  },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": ["go", "golang", "clean-architecture", "init-go-server", "add-go-feature", "backend", "migration", "websocket"]
+}

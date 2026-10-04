@@ -1,0 +1,85 @@
+<!-- nextjs-clean-arch:init -->
+## Frontend architecture
+
+This project uses Next.js App Router, React, TypeScript, Tailwind CSS, and Vitest.
+Use `add-nextjs-feature` when available for feature requests. These rules also
+apply when a request only says "add a login screen" or "build a product list".
+Use `nextjs-clean-arch` when available for code review or structural refactoring.
+A review request is read-only; refactoring preserves behavior, API contracts,
+and the established stack unless the user requests those changes.
+
+### Responsibilities and imports
+
+- `src/features/<feature>/domain/`: pure TypeScript business entities, values,
+  and invariants. No React, Next.js, network, storage, or environment access.
+- `src/features/<feature>/application/`: use cases and the small ports they
+  consume. Inject dependencies through function arguments or constructors.
+- `src/features/<feature>/infrastructure/`: HTTP/storage implementations,
+  external DTO validation/mapping, and platform integrations implementing ports.
+- `src/features/<feature>/presentation/`: React components, hooks, view models,
+  forms, loading/empty/error states, and Tailwind styling.
+- `src/composition/`: construct and connect concrete adapters/use cases. Keep
+  server and client composition separate; use request-scoped server dependencies.
+- `src/app/`: thin Next.js routes, layouts, Server Actions, and route handlers.
+  Compose features and map runtime concerns here, not business policy.
+- `src/shared/ui/`: reusable presentation primitives. Shared business values
+  belong in a separate framework-free module only when real reuse exists.
+
+Imports point inward: presentation -> application -> domain; infrastructure ->
+application ports/domain; composition and app routes assemble the needed layers.
+Application code must not import concrete infrastructure or UI. Presentation
+receives capabilities/data rather than constructing repositories. Avoid shared
+barrels that mix client and server modules or hide an outward dependency.
+
+The `home` feature is a replaceable starter screen. Its empty inner directories
+are reserved for real business operations; do not add fake entities or use cases
+just to fill them. Remove `.gitkeep` when adding real files.
+
+### Adding features
+
+1. Identify the owning feature and existing API/UI conventions. Preserve route,
+   payload, authentication, and styling contracts outside the requested change.
+2. Implement business rules and use-case ports only where the behavior needs
+   them. Purely presentational changes can stay in the presentation layer.
+3. Implement adapters that validate untrusted data, map errors, and propagate
+   cancellation. Do not put network requests directly in presentation components.
+4. Compose the use cases and connect the route/UI. Add accessible controls and
+   loading, empty, error, and success states as relevant to the feature.
+5. Add behavioral tests at the affected boundaries and complete the checks below.
+
+### Next.js server/client boundary
+
+Keep pages/layouts as Server Components unless their own behavior needs a client
+boundary. Add `"use client"` at interactive leaves. Protect privileged adapter
+and server-composition modules with `server-only` when introduced. Never expose
+secrets via `NEXT_PUBLIC_*` or pass repositories, callbacks, or class instances
+as ordinary Server-to-Client props; use serializable view data. Server Actions
+and route handlers validate input and identity, then call use cases. Authorization
+must also protect the actual business operation, not only a hidden UI button.
+
+Do not reuse authenticated request state in a process-wide singleton. Make cache
+and revalidation decisions explicit for the operation. Preserve the production
+Next.js build pipeline; Vite is used for Vitest, not as a replacement app server.
+
+### Tests and verification
+
+- `*.test.ts`: Vitest `unit` project in Node, for domain/use cases/adapters.
+- `*.test.tsx`: Vitest `components` project in jsdom, with React Testing Library,
+  jest-dom matchers, user-event, and automatic cleanup.
+- Mock external ports for use-case tests. Test visible behavior and user actions
+  in UI tests, including relevant failure states; avoid snapshots as sole proof.
+- Async Server Components and Next runtime semantics require integration/E2E
+  coverage when changed. Vitest unit tests alone do not verify that boundary.
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
+
+Lint rejects common framework/outward imports and direct I/O in inner layers.
+Also review imports, relative paths, barrels, and Server/Client boundaries;
+lint is not a complete architecture proof. Keep the lockfile and use `npm ci`
+for repeatable installs. Report skipped runtime checks and existing failures.
+<!-- /nextjs-clean-arch:init -->

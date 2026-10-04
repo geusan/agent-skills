@@ -1,0 +1,27 @@
+{
+  "name": "nextjs-clean-arch",
+  "version": "0.2.0",
+  "description": "Initialize and extend Next.js frontends, review existing code, and refactor toward clean architecture while preserving behavior.",
+  "author": {
+    "name": "geusan",
+    "url": "https://github.com/geusan"
+  },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": ["nextjs", "react", "tailwind", "typescript", "vitest", "clean-architecture", "review", "refactor"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Next.js Clean Architecture",
+    "shortDescription": "Build, review, and refactor Next.js frontends.",
+    "longDescription": "Initialize Next.js apps with React, Tailwind CSS, TypeScript, and Vitest, implement features through clean architecture boundaries, or review and incrementally refactor existing applications while preserving their behavior and tooling.",
+    "developerName": "geusan",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": [
+      "Initialize a Next.js frontend with clean architecture and Vitest.",
+      "Add the requested frontend feature through clean architecture layers.",
+      "Review this Next.js application's code without modifying it.",
+      "Refactor this existing Next.js application toward clean architecture while preserving behavior."
+    ]
+  }
+}

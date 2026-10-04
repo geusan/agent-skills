@@ -1,0 +1,30 @@
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const frameworkImports = ["react", "react/*", "react-dom", "react-dom/*", "next", "next/*", "server-only", "client-only"];
+const adapters = ["**/infrastructure", "**/infrastructure/**", "**/presentation", "**/presentation/**", "@/app/**", "@/composition/**", "@/shared/ui/**"];
+const coreRules = {
+  "no-restricted-globals": ["error", "fetch", "window", "document", "localStorage", "sessionStorage"],
+  "no-restricted-properties": ["error", { object: "process", property: "env", message: "Read configuration in an adapter or composition root." }],
+};
+
+export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  globalIgnores([".next/**", "out/**", "build/**", "coverage/**", "next-env.d.ts"]),
+  {
+    files: ["src/features/*/domain/**/*.{ts,tsx}"],
+    rules: {
+      ...coreRules,
+      "no-restricted-imports": ["error", { patterns: [{ group: [...frameworkImports, ...adapters, "**/application", "**/application/**"], message: "Domain code must not depend on application, UI, or infrastructure." }] }],
+    },
+  },
+  {
+    files: ["src/features/*/application/**/*.{ts,tsx}"],
+    rules: {
+      ...coreRules,
+      "no-restricted-imports": ["error", { patterns: [{ group: [...frameworkImports, ...adapters], message: "Inject ports into use cases instead of importing adapters." }] }],
+    },
+  },
+]);

@@ -1,0 +1,46 @@
+# {{PROJECT_NAME}}
+
+Next.js App Router + React + TypeScript + Tailwind CSS + Vitest.
+Architecture and future feature instructions are in [AGENTS.md](AGENTS.md).
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:3000`. The starter uses system fonts, so production builds
+do not download a font. Use a Node release supported by the installed packages
+(a current Node 24 LTS release is a suitable starting point). `.node-version`
+records the runtime used at initialization. Commit
+`package-lock.json` and use `npm ci` for subsequent installs.
+
+```text
+src/app/                       Next.js routing and runtime adapters
+src/features/<feature>/
+  domain/                      business entities and rules
+  application/                 use cases and consumed ports
+  infrastructure/              network/storage implementations and mapping
+  presentation/                React UI, hooks, and view state
+src/composition/               separate server/client dependency wiring
+src/shared/ui/                 shared presentation primitives
+```
+
+Request `add-nextjs-feature <feature description>`, or describe a frontend feature
+normally in this project. The saved instructions apply without repeating the
+architecture requirement. Replace the `home` starter as the product takes shape;
+inner directories are populated only when business behavior needs them.
+
+Checks:
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
+
+`npm run test:watch` starts Vitest in watch mode. `*.test.ts` uses Node;
+`*.test.tsx` uses jsdom and React Testing Library. For async Server Components
+or runtime routing/authentication, add the relevant integration/E2E coverage;
+the starter component test does not exercise those Next.js runtime features.
+
+Production preview: `npm run build` followed by `npm start`.

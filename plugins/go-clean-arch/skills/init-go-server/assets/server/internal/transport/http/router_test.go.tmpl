@@ -1,0 +1,49 @@
+package httpapi_test
+
+import (
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
+	httpapi "{{MODULE_PATH}}/internal/transport/http"
+)
+
+func TestHealth(t *testing.T) {
+	recorder := httptest.NewRecorder()
+	httpapi.NewRouter().ServeHTTP(recorder, httptest.NewRequest(http.MethodGet, "/health", nil))
+	if recorder.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", recorder.Code)
+	}
+	if got := recorder.Header().Get("Content-Type"); got != "application/json" {
+		t.Fatalf("content type = %q", got)
+	}
+	var body struct {
+		Status string `json:"status"`
+	}
+	if err := json.Unmarshal(recorder.Body.Bytes(), &body); err != nil {
+		t.Fatal(err)
+	}
+	if body.Status != "ok" {
+		t.Fatalf("status body = %q", body.Status)
+	}
+}
+
+func TestRouteBoundaries(t *testing.T) {
+	for _, tc := range []struct {
+		method string
+		path   string
+		want   int
+	}{
+		{http.MethodPost, "/health", http.StatusMethodNotAllowed},
+		{http.MethodGet, "/missing", http.StatusNotFound},
+	} {
+		t.Run(tc.method+" "+tc.path, func(t *testing.T) {
+			recorder := httptest.NewRecorder()
+			httpapi.NewRouter().ServeHTTP(recorder, httptest.NewRequest(tc.method, tc.path, nil))
+			if recorder.Code != tc.want {
+				t.Fatalf("status = %d, want %d", recorder.Code, tc.want)
+			}
+		})
+	}
+}

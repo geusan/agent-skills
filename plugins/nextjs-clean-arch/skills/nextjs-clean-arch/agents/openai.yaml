@@ -1,0 +1,6 @@
+interface:
+  display_name: "Next.js Architecture Review and Refactor"
+  short_description: "Review or refactor existing Next.js apps safely"
+  default_prompt: "Use $nextjs-clean-arch to review this existing Next.js application, or refactor the requested scope while preserving behavior and API contracts."
+policy:
+  allow_implicit_invocation: true

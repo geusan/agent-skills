@@ -1,0 +1,6 @@
+interface:
+  display_name: "Initialize Next.js App"
+  short_description: "Set up Next.js, Tailwind, TypeScript, and Vitest"
+  default_prompt: "Use $init-nextjs-app to initialize a Next.js frontend with clean architecture, Tailwind CSS, TypeScript, and Vitest."
+policy:
+  allow_implicit_invocation: true

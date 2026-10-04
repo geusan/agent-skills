@@ -1,0 +1,6 @@
+interface:
+  display_name: "Initialize Go Server"
+  short_description: "Create a runnable Go server with clean architecture"
+  default_prompt: "Use $init-go-server to initialize a Go server here with clean architecture and persistent development instructions."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,27 @@
+{
+  "name": "go-clean-arch",
+  "version": "0.2.0",
+  "description": "Initialize Go servers, add features through clean architecture layers, and review or migrate existing backends.",
+  "author": {
+    "name": "geusan",
+    "url": "https://github.com/geusan"
+  },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": ["go", "golang", "clean-architecture", "init-go-server", "add-go-feature", "backend", "migration", "websocket"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Go Clean Architecture",
+    "shortDescription": "Initialize Go servers and add clean architecture features.",
+    "longDescription": "Run init-go-server for a runnable backend with persistent development rules, use add-go-feature for complete domain/use-case/adapter implementations, and review or migrate existing Go architecture.",
+    "developerName": "geusan",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": [
+      "Use init-go-server to initialize a Go backend here.",
+      "Use add-go-feature to implement a new API through clean architecture layers.",
+      "Refactor this Go service into clean architecture while preserving behavior.",
+      "Review this Go server's dependency boundaries and constructor wiring."
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "nextjs-clean-arch",
+  "version": "0.2.0",
+  "description": "Initialize and extend Next.js frontends, review existing code, and refactor toward clean architecture while preserving behavior.",
+  "author": {"name": "geusan"},
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": ["nextjs", "react", "tailwind", "typescript", "vitest", "clean-architecture", "review", "refactor"]
+}

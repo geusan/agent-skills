@@ -1,0 +1,66 @@
+<!-- go-clean-arch:init -->
+## Go server development
+
+This module (`{{MODULE_PATH}}`) uses Clean Architecture. Apply these rules to
+every feature, including ordinary requests such as "add a user API" that do not
+explicitly mention architecture. If available, use `add-go-feature` for feature
+implementation; the rules below also work without the plugin installed.
+Use `go-clean-arch` when available for code review or structural refactoring.
+A review request is read-only; refactoring preserves behavior, API contracts,
+and the established stack unless the user requests those changes.
+
+### Package responsibilities
+
+- `internal/domain/`: business entities, values, invariants, and errors. Keep
+  HTTP, ORM, SQL driver, JWT implementation, and environment concerns outside.
+- `internal/usecase/<feature>/`: business decisions and orchestration. Declare
+  small repository/external-service interfaces here, owned by their consumer.
+- `internal/repository/<store>/`: persistence adapters and row/domain mapping.
+  Implement the use-case ports; do not expose driver types or errors inward.
+- `internal/transport/http/`: request/response DTOs, input parsing, caller
+  identity, and status/error mapping. Inject use cases into handlers.
+- `cmd/api/main.go`: configuration, resource lifecycle, concrete constructors,
+  and route wiring. Keep business decisions out of this composition root.
+
+Compile-time imports point inward: transport -> use case -> domain; repository
+adapters -> domain and consumer ports; main -> the assembled layers. Use cases
+must not import transport, repository implementations, or main. Domain must not
+import use cases or adapters. Preserve this rule for any additional packages.
+
+### Adding a feature
+
+1. Read the closest existing feature, its routes, ports, and tests. Preserve
+   established API contracts and the chosen framework/storage unless the task
+   explicitly changes them.
+2. Define the operation's inputs, outputs, errors, and business permissions.
+   Implement domain rules and a use case before wiring the HTTP endpoint.
+3. Add only the interfaces and adapters the operation consumes. Keep transactions
+   atomic without passing `*sql.Tx`, `*gorm.DB`, or HTTP context through ports.
+4. Implement HTTP mapping and inject concrete dependencies in the composition
+   root. Propagate `context.Context`; return expected failures as errors.
+5. Test business behavior and HTTP contracts, plus storage semantics when they
+   change. Inspect imports to catch outward dependencies before completing work.
+
+The initial `/health` endpoint is process liveness, so it has no artificial
+business use case or database repository. Add real domain/use-case/repository
+files when the first feature needs them; remove its directory's `.gitkeep` then.
+Do not implement business operations directly in the router just because health
+is handled there. Do not add a database, auth system, or chat feature by default.
+
+### Verification
+
+Format changed Go files, then run from this module:
+
+```bash
+go build ./...
+go test ./...
+go vet ./...
+go list -f '{{.ImportPath}} -> {{join .Imports " "}}' ./...
+```
+
+Review the import listing against the boundaries above; it is not an automatic
+pass/fail check. Run `go test -race ./...` when shared state or goroutines change.
+Use isolated test infrastructure for integration checks. Preserve schema and
+stored data during structural refactors, and keep migrations separate from
+server startup. Report skipped checks and pre-existing failures precisely.
+<!-- /go-clean-arch:init -->

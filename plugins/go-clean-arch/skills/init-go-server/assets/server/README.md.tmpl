@@ -1,0 +1,38 @@
+<!-- go-clean-arch:init -->
+## {{PROJECT_NAME}} Go server
+
+Module: `{{MODULE_PATH}}`. The starter uses Go's standard HTTP library and has no
+external service dependencies. The `go.mod` directive records the Go toolchain
+used to initialize it. If the module begins with `example.com/`, it is a local
+placeholder; set your real repository module path and update imports before
+publishing or sharing it as a module.
+
+Run locally:
+
+```bash
+go run ./cmd/api
+curl http://localhost:8080/health
+```
+
+`HTTP_ADDR` defaults to `:8080`; set it to use another address. `GET /health`
+returns `200` with `{"status":"ok"}` and checks process liveness only.
+The server has HTTP timeouts and handles interrupt/SIGTERM for graceful shutdown.
+
+The layout and all future feature rules are in [AGENTS.md](AGENTS.md). Start a
+feature by requesting `add-go-feature <feature description>`, or simply describe
+the feature while working in this project. Implement business operations through
+domain, use case, adapter, and composition layers. The empty domain, usecase,
+and repository directories are reserved for actual business behavior.
+
+Validate changes:
+
+```bash
+go build ./...
+go test ./...
+go vet ./...
+```
+
+The architecture is informed by
+[geusan/go-clean-arch-chat-server](https://github.com/geusan/go-clean-arch-chat-server),
+with framework-specific types kept outside business code.
+<!-- /go-clean-arch:init -->

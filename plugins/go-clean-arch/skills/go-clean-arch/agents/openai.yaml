@@ -1,0 +1,6 @@
+interface:
+  display_name: "Go Clean Architecture"
+  short_description: "Review and migrate existing Go architecture boundaries"
+  default_prompt: "Use $go-clean-arch to review or refactor this existing Go server's architecture while preserving behavior."
+policy:
+  allow_implicit_invocation: true
