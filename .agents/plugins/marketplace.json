@@ -17,6 +17,18 @@
       "category": "Productivity"
     },
     {
+      "name": "fastlane",
+      "source": {
+        "source": "local",
+        "path": "./plugins/fastlane"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "go-clean-arch",
       "source": {
         "source": "local",

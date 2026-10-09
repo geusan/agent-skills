@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fastlane Setup"
+  short_description: "Set up Fastlane for native iOS, Android, or Flutter"
+  default_prompt: "Use $fastlane-setup to configure Fastlane in this existing app using its native build tools and preserving its current project structure."

@@ -1,0 +1,11 @@
+{
+  "name": "fastlane",
+  "version": "0.1.0",
+  "description": "Set up Fastlane independently for existing native iOS, native Android, and Flutter apps.",
+  "author": {
+    "name": "geusan"
+  },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": ["fastlane", "ios", "android", "native", "flutter", "setup"]
+}

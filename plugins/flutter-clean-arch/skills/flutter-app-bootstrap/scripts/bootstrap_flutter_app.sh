@@ -12,12 +12,6 @@ PLATFORMS="android,ios"
 DESCRIPTION="A new Flutter application."
 CLEAN_ARCH_REPO="geusan/flutter-clean-arch"
 CLEAN_ARCH_REF="main"
-FASTLANE_MODE="files"
-FASTLANE_REPO="geusan/fastlane-template"
-FASTLANE_REF="78cfa31d1ce27aa3a6927abd344123176ae733a6"
-FIREBASE_PROJECT=""
-TESTER_GROUP="testers"
-ALLOW_CLOUD_CHANGES=0
 FLUTTER_BIN="${FLUTTER_BIN:-flutter}"
 LEGACY_CLEAN_ARCH_COMMIT="559779db16aad5c3475a7a5b6fd84ebba4944d1b"
 
@@ -39,13 +33,6 @@ Options:
   --clean-arch-repo <owner/repo>
                              Clean Architecture source repository.
   --clean-arch-ref <ref>    Source branch, tag, or commit (default: main).
-  --fastlane <mode>         none, files, or configure (default: files).
-  --fastlane-repo <owner/repo>
-                             Fastlane template repository.
-  --fastlane-ref <ref>      Fastlane template branch, tag, or commit.
-  --firebase-project <id>   GCP/Firebase project for configure mode.
-  --tester-group <alias>    Firebase tester-group alias (default: testers).
-  --allow-cloud-changes     Required acknowledgement for configure mode.
   -h, --help                Show help.
 
 Environment:
@@ -110,34 +97,8 @@ while [[ $# -gt 0 ]]; do
       CLEAN_ARCH_REF="$2"
       shift 2
       ;;
-    --fastlane)
-      [[ $# -ge 2 ]] || die "--fastlane requires a value"
-      FASTLANE_MODE="$2"
-      shift 2
-      ;;
-    --fastlane-repo)
-      [[ $# -ge 2 ]] || die "--fastlane-repo requires a value"
-      FASTLANE_REPO="$2"
-      shift 2
-      ;;
-    --fastlane-ref)
-      [[ $# -ge 2 ]] || die "--fastlane-ref requires a value"
-      FASTLANE_REF="$2"
-      shift 2
-      ;;
-    --firebase-project)
-      [[ $# -ge 2 ]] || die "--firebase-project requires a value"
-      FIREBASE_PROJECT="$2"
-      shift 2
-      ;;
-    --tester-group)
-      [[ $# -ge 2 ]] || die "--tester-group requires a value"
-      TESTER_GROUP="$2"
-      shift 2
-      ;;
-    --allow-cloud-changes)
-      ALLOW_CLOUD_CHANGES=1
-      shift
+    --fastlane|--fastlane-repo|--fastlane-ref|--firebase-project|--tester-group|--allow-cloud-changes)
+      die "Fastlane setup is separate; use the fastlane-setup skill on the existing app"
       ;;
     -h|--help)
       usage
@@ -156,9 +117,6 @@ done
 [[ "$ORG" =~ ^[a-z][a-z0-9]*(\.[a-z][a-z0-9]*)+$ ]] || die "--org must be a lowercase reverse-domain identifier"
 [[ "$CLEAN_ARCH_REPO" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || die "--clean-arch-repo must be owner/repository"
 [[ "$CLEAN_ARCH_REF" =~ ^[A-Za-z0-9][A-Za-z0-9._/-]*$ ]] || die "--clean-arch-ref contains unsupported characters"
-[[ "$FASTLANE_MODE" =~ ^(none|files|configure)$ ]] || die "--fastlane must be none, files, or configure"
-[[ "$FASTLANE_REPO" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || die "--fastlane-repo must be owner/repository"
-[[ "$FASTLANE_REF" =~ ^[A-Za-z0-9][A-Za-z0-9._/-]*$ ]] || die "--fastlane-ref contains unsupported characters"
 [[ -f "$ADAPTER" ]] || die "Clean Architecture adapter is missing: $ADAPTER"
 
 IFS=',' read -r -a platform_items <<< "$PLATFORMS"
@@ -169,10 +127,6 @@ for platform in "${platform_items[@]}"; do
     *) die "unsupported platform: $platform" ;;
   esac
 done
-
-if [[ "$FASTLANE_MODE" == "configure" && "$ALLOW_CLOUD_CHANGES" -ne 1 ]]; then
-  die "configure mode can change GCP/Firebase resources; pass --allow-cloud-changes only after explicit authorization"
-fi
 
 command -v git >/dev/null 2>&1 || die "git is required"
 command -v python3 >/dev/null 2>&1 || die "python3 is required"
@@ -302,35 +256,8 @@ step "Format and validate application source"
   fi
 )
 
-FASTLANE_COMMIT=""
-if [[ "$FASTLANE_MODE" != "none" ]]; then
-  FASTLANE_CHECKOUT="$TEMP_DIR/fastlane-template"
-
-  step "Fetch Fastlane template $FASTLANE_REPO@$FASTLANE_REF"
-  fetch_repo "$FASTLANE_CHECKOUT" "$FASTLANE_REPO" "$FASTLANE_REF"
-  FASTLANE_COMMIT="$(git -C "$FASTLANE_CHECKOUT" rev-parse HEAD)"
-  FASTLANE_SETUP="$FASTLANE_CHECKOUT/setup.sh"
-  [[ -f "$FASTLANE_SETUP" ]] || die "setup.sh was not found in $FASTLANE_REPO@$FASTLANE_REF"
-
-  fastlane_args=(--dir "$TARGET_DIR" --group "$TESTER_GROUP")
-  if [[ "$FASTLANE_MODE" == "files" ]]; then
-    fastlane_args+=(--skip-gcp --skip-asc --non-interactive)
-  elif [[ -n "$FIREBASE_PROJECT" ]]; then
-    fastlane_args+=(--project "$FIREBASE_PROJECT")
-  fi
-
-  step "Install Fastlane pipeline ($FASTLANE_MODE)"
-  TEMPLATE_REPO="$FASTLANE_REPO" TEMPLATE_REF="$FASTLANE_REF" \
-    bash "$FASTLANE_SETUP" "${fastlane_args[@]}"
-fi
-
-if [[ -n "$FASTLANE_COMMIT" ]]; then
-  FASTLANE_SOURCE_JSON="{\"repository\":\"$FASTLANE_REPO\",\"requested_ref\":\"$FASTLANE_REF\",\"resolved_commit\":\"$FASTLANE_COMMIT\"}"
-else
-  FASTLANE_SOURCE_JSON="null"
-fi
-printf '{\n  "clean_arch": {"repository":"%s","requested_ref":"%s","resolved_commit":"%s"},\n  "fastlane": %s\n}\n' \
-  "$CLEAN_ARCH_REPO" "$CLEAN_ARCH_REF" "$CLEAN_ARCH_COMMIT" "$FASTLANE_SOURCE_JSON" \
+printf '{\n  "clean_arch": {"repository":"%s","requested_ref":"%s","resolved_commit":"%s"}\n}\n' \
+  "$CLEAN_ARCH_REPO" "$CLEAN_ARCH_REF" "$CLEAN_ARCH_COMMIT" \
   > "$TARGET_DIR/.bootstrap-sources.json"
 
 step "Ready"
@@ -353,8 +280,3 @@ printf 'package: %s\n' "$APP_NAME"
 printf 'platforms: %s\n' "$PLATFORMS"
 printf 'Flutter: %s\n' "$FLUTTER_VERSION"
 printf 'Clean Architecture: %s@%s (%s)\n' "$CLEAN_ARCH_REPO" "$CLEAN_ARCH_REF" "$CLEAN_ARCH_COMMIT"
-if [[ -n "$FASTLANE_COMMIT" ]]; then
-  printf 'Fastlane: %s@%s (%s)\n' "$FASTLANE_REPO" "$FASTLANE_REF" "$FASTLANE_COMMIT"
-else
-  printf 'Fastlane: none\n'
-fi

@@ -1,6 +1,6 @@
 {
   "name": "geusan-flutter",
-  "description": "Flutter, Go, Next.js, relational database design, analytics, and App Store review skills maintained by geusan.",
+  "description": "Flutter, native mobile Fastlane setup, Go, Next.js, relational database design, analytics, and App Store review skills maintained by geusan.",
   "owner": {
     "name": "geusan"
   },
@@ -9,6 +9,11 @@
       "name": "flutter-clean-arch",
       "source": "./plugins/flutter-clean-arch",
       "description": "Bootstrap new Flutter apps or migrate existing apps toward clean architecture."
+    },
+    {
+      "name": "fastlane",
+      "source": "./plugins/fastlane",
+      "description": "Set up Fastlane in existing native iOS, native Android, or Flutter apps without app scaffolding."
     },
     {
       "name": "go-clean-arch",

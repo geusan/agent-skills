@@ -1,12 +1,18 @@
 # Agent Skills
 
-Reusable Flutter, Go, Next.js, relational database design, and App Store review workflows packaged for both Codex and Claude Code.
+Reusable Flutter, native mobile Fastlane setup, Go, Next.js, relational database design, and App Store review workflows packaged for both Codex and Claude Code.
 
 The `flutter-clean-arch` plugin includes:
 
-- `flutter-app-bootstrap`: create a new Flutter app from `geusan/flutter-clean-arch`, with optional Fastlane preparation.
+- `flutter-app-bootstrap`: create a new Flutter app from `geusan/flutter-clean-arch`. Fastlane setup is a separate skill.
 - `flutter-clean-arch-migrate`: incrementally migrate an existing Flutter app while preserving behavior and integrations.
 - `flutter-firebase-analytics`: add a facade-based Firebase Analytics integration, design a measurement plan, validate collection, and analyze GA4 or BigQuery events.
+
+The `fastlane` plugin includes:
+
+- `fastlane-setup`: configure Fastlane in an existing native iOS, native Android, or Flutter app, preserving its build system and project layout. Uses `geusan/fastlane-template` as a reference and adapts its Flutter-specific assumptions for native projects.
+
+Request `Set up Fastlane in this Swift app` or `기존 Android 앱에 Fastlane 설정해줘` in the app workspace. Flutter and application scaffolding are not prerequisites. For a new Flutter app with Fastlane, create the app first and run `fastlane-setup` afterward. The Flutter bootstrap script no longer accepts Fastlane/cloud options or installs deployment files.
 
 The `go-clean-arch` plugin includes:
 
@@ -79,6 +85,7 @@ Add this repository as a marketplace and install the plugin:
 ```bash
 codex plugin marketplace add geusan/agent-skills
 codex plugin add flutter-clean-arch@personal
+codex plugin add fastlane@personal
 codex plugin add go-clean-arch@personal
 codex plugin add nextjs-clean-arch@personal
 codex plugin add rdb-design@personal
@@ -89,6 +96,10 @@ Start a new Codex session, run `/skills` to confirm discovery, and invoke a bund
 
 ```text
 $flutter-clean-arch:flutter-app-bootstrap Create a mobile app named sample_app with organization com.example.
+```
+
+```text
+$fastlane:fastlane-setup Set up Fastlane in this existing native iOS app.
 ```
 
 ```text
@@ -129,6 +140,7 @@ $app-store:app-store-review 이 앱의 App Store 심사 준비 상태를 확인�
 ```bash
 claude plugin marketplace add geusan/agent-skills
 claude plugin install flutter-clean-arch@geusan-flutter
+claude plugin install fastlane@geusan-flutter
 claude plugin install go-clean-arch@geusan-flutter
 claude plugin install nextjs-clean-arch@geusan-flutter
 claude plugin install rdb-design@geusan-flutter
@@ -139,6 +151,10 @@ Start a new Claude Code session or run `/reload-plugins`, then invoke a bundled 
 
 ```text
 /flutter-clean-arch:flutter-app-bootstrap Create a mobile app named sample_app with organization com.example.
+```
+
+```text
+/fastlane:fastlane-setup Set up Fastlane in this existing native Android app.
 ```
 
 ```text
@@ -180,6 +196,7 @@ Test the Claude Code plugin directly from this repository:
 
 ```bash
 claude --plugin-dir ./plugins/flutter-clean-arch
+claude --plugin-dir ./plugins/fastlane
 claude --plugin-dir ./plugins/go-clean-arch
 claude --plugin-dir ./plugins/nextjs-clean-arch
 claude --plugin-dir ./plugins/rdb-design
@@ -189,6 +206,7 @@ Validate the plugin manifests:
 
 ```bash
 claude plugin validate ./plugins/flutter-clean-arch
+claude plugin validate ./plugins/fastlane
 claude plugin validate ./plugins/go-clean-arch
 claude plugin validate ./plugins/nextjs-clean-arch
 claude plugin validate ./plugins/rdb-design
