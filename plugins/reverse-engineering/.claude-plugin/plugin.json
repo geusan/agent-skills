@@ -1,0 +1,20 @@
+{
+  "name": "reverse-engineering",
+  "version": "0.1.0",
+  "description": "Investigate shipped apps, binaries, and real website flows with REA evidence and available Computer Use tools.",
+  "author": {
+    "name": "geusan",
+    "url": "https://github.com/geusan"
+  },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": [
+    "reverse-engineering",
+    "rea",
+    "evidence",
+    "computer-use",
+    "website",
+    "electron",
+    "android"
+  ]
+}

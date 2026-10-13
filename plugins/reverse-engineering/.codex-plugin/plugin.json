@@ -1,0 +1,36 @@
+{
+  "name": "reverse-engineering",
+  "version": "0.1.0",
+  "description": "Investigate shipped apps, binaries, and real website flows with REA evidence and available Computer Use tools.",
+  "author": {
+    "name": "geusan",
+    "url": "https://github.com/geusan"
+  },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": [
+    "reverse-engineering",
+    "rea",
+    "evidence",
+    "computer-use",
+    "website",
+    "electron",
+    "android"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Reverse Engineering",
+    "shortDescription": "Investigate apps, binaries, and real website flows.",
+    "longDescription": "Use REA CLI or MCP for evidence-backed artifact analysis and available Computer Use tools for actual website interactions. Includes feature tracing, version comparison, reconstruction verification, and source attribution. Analysis runtimes are supplied separately.",
+    "developerName": "geusan",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Explain how the selected app feature works using artifact and runtime evidence.",
+      "Use the selected website to investigate its search and detail flow, recording actions, observed states, and unknowns."
+    ]
+  }
+}

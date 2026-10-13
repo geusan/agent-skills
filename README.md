@@ -1,6 +1,6 @@
 # Agent Skills
 
-Reusable Flutter, native mobile Fastlane setup, Go, Next.js, relational database design, and App Store review workflows packaged for both Codex and Claude Code.
+Reusable Flutter, native mobile Fastlane setup, Go, Next.js, relational database design, App Store review, and reverse-engineering workflows packaged for both Codex and Claude Code.
 
 The `flutter-clean-arch` plugin includes:
 
@@ -42,6 +42,16 @@ Both skills allow implicit selection for database design, ERD documentation, and
 The `app-store` plugin includes:
 
 - `app-store-review`: prepare TestFlight builds, store metadata and screenshots, privacy disclosures, content rights, age ratings, and release settings using verified app behavior. Includes a dated Hisohiso case reference.
+
+The `reverse-engineering` plugin includes:
+
+- `reverse-engineer-anything`: investigate shipped binaries, JavaScript/Electron applications, APKs, and websites using REA CLI/MCP and available Computer Use tools. Includes feature tracing, version comparison, reconstruction verification, crash investigation, residual-unknown review, and bounded process experiments.
+
+For websites, the skill guides actual navigation, search, filters, forms, and state transitions, with action/screenshot records. Computer Use performs interactions; REA can separately provide passive runtime or saved-capture evidence when its connection is available. The skill distinguishes visible behavior from inferred server implementation and preserves the user's authorization for consequential actions.
+
+This is an instruction-only plugin: supply REA CLI or MCP and the engines needed for the target separately. Website interaction needs an available Computer Use or browser tool; this plugin does not install one. Existing REA tools are reused without running setup for every task. If MCP setup is needed, first review `rea setup --client codex --skill=false --dry-run --json`; `--skill=false` avoids installing another copy of the bundled skill. Installing this plugin does not change REA registrations, approval settings, or existing personal skills. If an upstream `reverse-engineer-anything` skill is also installed, explicitly select the plugin-qualified skill or choose one copy to maintain.
+
+Request `이 Electron 앱의 클립보드 기능을 근거와 함께 분석해줘` or `선택한 웹사이트에서 검색·필터·상세 화면을 직접 사용해보고 흐름을 분석해줘`. Full source-repository architecture reviews use ordinary repository tools. See the [skill](plugins/reverse-engineering/skills/reverse-engineer-anything/SKILL.md), [website workflow](plugins/reverse-engineering/skills/reverse-engineer-anything/references/website-use.md), and [pinned REA sources and license](plugins/reverse-engineering/skills/reverse-engineer-anything/references/upstream.md).
 
 ## Review and refactor existing projects
 
@@ -90,6 +100,7 @@ codex plugin add go-clean-arch@personal
 codex plugin add nextjs-clean-arch@personal
 codex plugin add rdb-design@personal
 codex plugin add app-store@personal
+codex plugin add reverse-engineering@personal
 ```
 
 Start a new Codex session, run `/skills` to confirm discovery, and invoke a bundled skill:
@@ -135,6 +146,10 @@ $rdb-design:review-database ERD와 실제 스키마 정의의 일치 여부를 �
 $app-store:app-store-review 이 앱의 App Store 심사 준비 상태를 확인하고, 한국어 메타데이터와 개인정보 신고를 준비해줘.
 ```
 
+```text
+$reverse-engineering:reverse-engineer-anything 선택한 웹사이트에서 검색과 상세 보기를 직접 사용하고, 화면 변화·네트워크 근거·미확인 사항을 정리해줘.
+```
+
 ## Install in Claude Code
 
 ```bash
@@ -145,6 +160,7 @@ claude plugin install go-clean-arch@geusan-flutter
 claude plugin install nextjs-clean-arch@geusan-flutter
 claude plugin install rdb-design@geusan-flutter
 claude plugin install app-store@geusan-flutter
+claude plugin install reverse-engineering@geusan-flutter
 ```
 
 Start a new Claude Code session or run `/reload-plugins`, then invoke a bundled skill:
@@ -190,6 +206,10 @@ Start a new Claude Code session or run `/reload-plugins`, then invoke a bundled 
 /app-store:app-store-review Explain the correct selections in this App Store Connect screenshot using the actual release build.
 ```
 
+```text
+/reverse-engineering:reverse-engineer-anything Trace the clipboard feature in the selected Electron artifact and explain the evidence and remaining unknowns.
+```
+
 ## Local development
 
 Test the Claude Code plugin directly from this repository:
@@ -200,6 +220,7 @@ claude --plugin-dir ./plugins/fastlane
 claude --plugin-dir ./plugins/go-clean-arch
 claude --plugin-dir ./plugins/nextjs-clean-arch
 claude --plugin-dir ./plugins/rdb-design
+claude --plugin-dir ./plugins/reverse-engineering
 ```
 
 Validate the plugin manifests:
@@ -211,6 +232,7 @@ claude plugin validate ./plugins/go-clean-arch
 claude plugin validate ./plugins/nextjs-clean-arch
 claude plugin validate ./plugins/rdb-design
 claude plugin validate ./plugins/app-store
+claude plugin validate ./plugins/reverse-engineering
 ```
 
 Test the Go initializer's overwrite guards and metadata preservation:
