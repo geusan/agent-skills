@@ -1,0 +1,11 @@
+{
+  "command": "/absolute/supported-node/bin/node",
+  "args": ["/absolute/skill/scripts/rea.mjs", "mcp"],
+  "env": {
+    "REA_ANALYSIS_PROVIDER": "ghidra",
+    "GHIDRA_INSTALL_DIR": "/absolute/ghidra_12.1.4_PUBLIC",
+    "JAVA_HOME": "/absolute/jdk-21",
+    "GHIDRA_HEADLESS_MAXMEM": "2G"
+  },
+  "serverOutputDir": "/absolute/new-output"
+}

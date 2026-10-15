@@ -1,0 +1,13 @@
+{
+  "command": "docker",
+  "args": [
+    "run", "--rm", "-i", "--init", "--cpus=2", "--memory=4g",
+    "--mount", "type=bind,src=/absolute/input,dst=/input,readonly",
+    "--mount", "type=bind,src=/absolute/new-output,dst=/output",
+    "--mount", "type=bind,src=/absolute/ghidra-linux,dst=/opt/ghidra,readonly",
+    "--env", "GHIDRA_INSTALL_DIR=/opt/ghidra",
+    "--env", "REA_ANALYSIS_PROVIDER=ghidra",
+    "rea-skill:6.4.0", "mcp"
+  ],
+  "serverOutputDir": "/output"
+}

@@ -19,6 +19,8 @@ REA의 여섯 MCP 프롬프트를 직접 수행할 수 있도록 정리했다. �
 
 ## 재구현 검증 — verify_reconstruction
 
+실제 구현 요청은 [반복 재구현](reconstruction-loop.md) 안에서 이 검증을 수행한다. fail/unknown을 기록한 뒤 수정·추가 조사·재비교로 이어가며, 외부 제약이 없는 한 검증 보고만으로 끝내지 않는다.
+
 1. 유한한 요구를 정의한다. 예: 특정 입력의 출력, 빈 입력 오류, 정렬 순서. 전체 앱 동일성을 선언하지 않는다.
 2. 원본과 구현에서 호환 artifact/function/process 비교 근거를 얻는다. 웹은 같은 시작 상태·입력의 화면/응답도 비교한다.
 3. 도구가 지원하는 Evidence면 typed specification으로 `verify_reconstruction`을 쓴다. Computer Use 기록만으로 도구의 입력 계약을 충족한다고 가정하지 않는다.

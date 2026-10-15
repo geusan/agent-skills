@@ -47,9 +47,13 @@ The `reverse-engineering` plugin includes:
 
 - `reverse-engineer-anything`: investigate shipped binaries, JavaScript/Electron applications, APKs, and websites using REA CLI/MCP and available Computer Use tools. Includes feature tracing, version comparison, reconstruction verification, crash investigation, residual-unknown review, and bounded process experiments.
 
+For reconstruction requests, Codex follows an explicit investigation → implementation → original/candidate comparison → repair → regression loop. It keeps finite required behaviors, unresolved questions, current implementation fingerprints, evidence, and the next action in a resumable checkpoint. Analysis-only requests remain analysis-only. See the [reconstruction loop](plugins/reverse-engineering/skills/reverse-engineer-anything/references/reconstruction-loop.md).
+
+The read-only `reconstruction.mjs snapshot|check STATE.json` helper detects stale code/scenarios, missing or changed observation files, failed/unverified required cases, unresolved questions, and incomplete cleanup. A successful check means consistency of the declared scoped record, not independently proven equivalence or an autonomous background service. The agent still writes code, runs original/candidate comparisons, and evaluates the evidence.
+
 For websites, the skill guides actual navigation, search, filters, forms, and state transitions, with action/screenshot records. Computer Use performs interactions; REA can separately provide passive runtime or saved-capture evidence when its connection is available. The skill distinguishes visible behavior from inferred server implementation and preserves the user's authorization for consequential actions.
 
-This is an instruction-only plugin: supply REA CLI or MCP and the engines needed for the target separately. Website interaction needs an available Computer Use or browser tool; this plugin does not install one. Existing REA tools are reused without running setup for every task. If MCP setup is needed, first review `rea setup --client codex --skill=false --dry-run --json`; `--skill=false` avoids installing another copy of the bundled skill. Installing this plugin does not change REA registrations, approval settings, or existing personal skills. If an upstream `reverse-engineer-anything` skill is also installed, explicitly select the plugin-qualified skill or choose one copy to maintain.
+The plugin includes a pinned REA runtime dependency, a CLI passthrough, an adaptive JSONL session runner for every advertised MCP tool, and a Docker image recipe. Codex MCP registration and an always-on server are optional. Supply native engines/licenses and Computer Use/browser tools separately; existing REA connections can be reused. See [execution](plugins/reverse-engineering/skills/reverse-engineer-anything/references/execution.md), [Docker](plugins/reverse-engineering/skills/reverse-engineer-anything/references/docker.md), and [all capability families](plugins/reverse-engineering/skills/reverse-engineer-anything/references/capabilities.md). If MCP setup is needed, first review `rea setup --client codex --skill=false --dry-run --json`; `--skill=false` avoids installing another copy of the bundled skill. Installing this plugin does not change REA registrations, approval settings, or existing personal skills. If an upstream `reverse-engineer-anything` skill is also installed, explicitly select the plugin-qualified skill or choose one copy to maintain.
 
 Request `이 Electron 앱의 클립보드 기능을 근거와 함께 분석해줘` or `선택한 웹사이트에서 검색·필터·상세 화면을 직접 사용해보고 흐름을 분석해줘`. Full source-repository architecture reviews use ordinary repository tools. See the [skill](plugins/reverse-engineering/skills/reverse-engineer-anything/SKILL.md), [website workflow](plugins/reverse-engineering/skills/reverse-engineer-anything/references/website-use.md), and [pinned REA sources and license](plugins/reverse-engineering/skills/reverse-engineer-anything/references/upstream.md).
 
@@ -209,6 +213,29 @@ Start a new Claude Code session or run `/reload-plugins`, then invoke a bundled 
 ```text
 /reverse-engineering:reverse-engineer-anything Trace the clipboard feature in the selected Electron artifact and explain the evidence and remaining unknowns.
 ```
+
+## Run reverse engineering from a skill
+
+Use an existing supported Node (22.19+, 24.11+, or 26+), then install the skill-local runtime:
+
+```bash
+npm ci --prefix plugins/reverse-engineering/skills/reverse-engineer-anything/scripts
+node plugins/reverse-engineering/skills/reverse-engineer-anything/scripts/rea.mjs --version
+node plugins/reverse-engineering/skills/reverse-engineer-anything/scripts/session.mjs --output /absolute/new-investigation
+```
+
+For reconstruction, copy the [state template](plugins/reverse-engineering/skills/reverse-engineer-anything/assets/reconstruction-state.example.json) into the implementation workspace, fill in the actual scope and input paths, and use:
+
+```bash
+node plugins/reverse-engineering/skills/reverse-engineer-anything/scripts/reconstruction.mjs snapshot /absolute/reconstruction.json
+node plugins/reverse-engineering/skills/reverse-engineer-anything/scripts/reconstruction.mjs check /absolute/reconstruction.json
+```
+
+Example agent request: `원본의 셀 편집·수식 참조·필터 기능을 이 프로젝트에 구현하고, 같은 입력의 원본 비교가 통과할 때까지 차이를 조사하고 수정해줘.`
+
+Keep stdin open for the session runner. Send `{"op":"tools"}`, select an exact tool schema, then send `{"op":"call","name":"...","arguments":{...}}`. Each response is saved intact; stdout returns compact file receipts. `{"op":"close"}` exports Evidence and closes the native session. Runtime-sensitive sessions require their explicit cleanup operation as described in the execution guide. The output directory must be new.
+
+For reproducible discovery, pass `--batch plugins/reverse-engineering/skills/reverse-engineer-anything/assets/discovery.jsonl`. Setup and uninstall remain explicit CLI actions with their existing approval boundaries. Run `npm test --prefix plugins/reverse-engineering/skills/reverse-engineer-anything/scripts` for real REA static/session integration and transport failure tests. Native-engine verification is separate.
 
 ## Local development
 

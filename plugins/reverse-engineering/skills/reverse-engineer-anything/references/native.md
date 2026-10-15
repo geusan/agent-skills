@@ -1,5 +1,7 @@
 # 네이티브·관리 코드·패키지
 
+엔진별 준비·검증·복구: [Hopper](providers/hopper.md), [Ghidra](providers/ghidra.md), [IDA](providers/ida.md). 실제 실행은 [CLI/session runner](execution.md)를 사용한다.
+
 ## 네이티브
 
 `open_binary`에 사용자 경로와 선택한 provider를 전달한다. 자동 선택에서 여러 엔진이 가능하면 모호할 수 있다. 명시적 선택을 유지하고 실패 시 다른 엔진으로 조용히 바꾸지 않는다.

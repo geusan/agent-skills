@@ -1,7 +1,7 @@
 {
   "name": "reverse-engineering",
-  "version": "0.1.0",
-  "description": "Investigate shipped apps, binaries, and real website flows with REA evidence and available Computer Use tools.",
+  "version": "0.3.0",
+  "description": "Investigate software with REA and Computer Use, then iterate implementation, original/candidate comparison, and repairs within an evidence-backed reconstruction scope.",
   "author": {
     "name": "geusan",
     "url": "https://github.com/geusan"

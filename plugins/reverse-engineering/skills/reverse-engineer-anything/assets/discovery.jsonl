@@ -1,0 +1,5 @@
+{"op":"tools"}
+{"op":"prompts"}
+{"op":"schema","name":"binary_session"}
+{"op":"call","name":"binary_session","arguments":{}}
+{"op":"close"}

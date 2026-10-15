@@ -1,0 +1,5 @@
+{
+  "command": "/absolute/supported-node/bin/node",
+  "args": ["/absolute/rea-checkout/scripts/rea.mjs", "mcp"],
+  "serverOutputDir": "/absolute/new-output"
+}

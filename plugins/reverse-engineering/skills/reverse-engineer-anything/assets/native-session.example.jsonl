@@ -1,0 +1,4 @@
+{"op":"call","name":"open_binary","arguments":{"path":"/absolute/selected-binary","provider_id":"ghidra"}}
+{"op":"call","name":"analyze_function","arguments":{"procedure":"main"}}
+{"op":"call","name":"list_unknowns","arguments":{}}
+{"op":"close"}

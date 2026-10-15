@@ -1,6 +1,6 @@
 # 출처와 갱신
 
-REA 조사 지침을 한국어로 축약·재구성한 개인 스킬이다. REA 실행 코드나 분석 엔진은 포함하지 않는다. 실제 웹서비스를 Computer Use로 조작하는 절차와 보고서 템플릿은 이 플러그인에서 추가했다. REA 수동 관찰의 실행 권한을 확대하지 않는다.
+REA 조사 지침을 한국어로 축약·재구성한 개인 스킬이다. REA 실행 코드는 scripts/package-lock.json에 고정한 npm dependency로 공급하며, 소스 checkout launcher도 선택할 수 있다. 분석 엔진 실행 파일·license는 포함하지 않는다. 실제 웹서비스를 Computer Use로 조작하는 절차와 보고서 템플릿은 이 플러그인에서 추가했다. REA 수동 관찰의 실행 권한을 확대하지 않는다.
 
 - 원본: [morluto/rea](https://github.com/morluto/rea)
 - 기준 커밋: `3f80b75708f88e51c64eb0122c178b96789c53b3`

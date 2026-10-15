@@ -1,11 +1,31 @@
 ---
 name: reverse-engineer-anything
-description: REA CLI/MCP와 사용 가능한 Computer Use로 배포 앱·바이너리·웹서비스의 기능을 역공학한다. 소스 없는 앱의 동작 원리, Electron·APK 분석, 버전 비교, 실제 웹 사용 흐름 조사와 기능 재구현에 사용한다. 완전한 소스 저장소의 일반 구조 설명·코드 리뷰에는 사용하지 않는다.
+description: REA CLI/MCP와 사용 가능한 Computer Use로 배포 앱·바이너리·웹서비스의 기능을 역공학한다. 소스 없는 앱의 동작 원리, Electron·APK 분석, 버전 비교, 실제 웹 사용 흐름 조사와 원본 비교를 통한 반복 재구현에 사용한다. 완전한 소스 저장소의 일반 구조 설명·코드 리뷰에는 사용하지 않는다.
 ---
 
 # REA 리버스 엔지니어링
 
-사용자가 선택한 대상에서 질문에 필요한 근거를 얻고, 관찰·도출·추론·미확인을 구분해 설명한다. 구현 요청이면 확인된 동작을 기준으로 구현하고 검증한다. 이 스킬은 REA와 분석 엔진을 설치하지 않는다. 웹 조작은 현재 호스트가 제공하는 Computer Use나 브라우저 도구가 담당한다.
+사용자가 선택한 대상에서 질문에 필요한 근거를 얻고, 관찰·도출·추론·미확인을 구분해 설명한다. 구현 요청이면 확인된 동작을 기준으로 구현하고 검증한다. 이 스킬의 scripts는 REA 런타임을 고정 버전으로 실행하고 전체 CLI·MCP 계약을 연결한다. 분석 엔진은 별도 준비하며 웹 조작은 호스트의 Computer Use/브라우저 도구가 담당한다.
+
+## 작업 모드와 반복 완료
+
+설명·분석 요청은 근거와 미확인 사항을 정리한다. 재구현·복제 앱·호환 기능 구현 요청은 [반복 재구현 절차](references/reconstruction-loop.md)를 읽고 **원본 질문 → 조사 → 구현 → 동일 조건 비교 → 차이 수정 → 회귀**를 계속한다. 보고서나 첫 구현만으로 완료하지 않는다.
+
+목표·필수 항목·비교 사례·미해결 질문·다음 행동을 유지한다. 기존 상태를 재사용하고, 없으면 [체크포인트 템플릿](assets/reconstruction-state.example.json)으로 시작한다. `scripts/reconstruction.mjs check`로 현재 코드와 근거의 일치 여부·필수 사례 상태를 점검한다. 원본 비교 없이 구현 자체 테스트만 통과한 것을 동등성으로 인정하지 않는다.
+
+원본을 충분히 이해한 한 동작부터 구현한다. 수정 뒤에는 영향을 받는 이전 사례도 다시 검증한다. 필수 항목이 남고 실행 가능한 다음 작업이 있으면 매번 사용자에게 계속할지 묻지 않고 진행한다. 실제 접근·자료·예산 제약이나 사용자 중지에서는 상태를 보존하고 미완료 이유를 명시한다. 분석 요청을 개발 요청으로 확대하지 않는다.
+
+## 실행 방법
+
+새 환경·CLI 호출·연속 조사 세션은 [실행 계층](references/execution.md)을 먼저 읽는다. 스킬 내부 npm lock으로 REA를 설치할 수 있고 Codex 별도 MCP 등록이나 상시 서버는 필요하지 않다. 이미 연결된 REA가 있으면 그대로 재사용한다.
+
+- 단발 명령: `node "$SKILL_ROOT/scripts/rea.mjs" <REA 명령과 인자>`
+- 연속 조사: `node "$SKILL_ROOT/scripts/session.mjs" --output /absolute/new-run`을 stdin 유지 세션에서 실행하고 JSONL로 요청한다. 도구 목록·정확한 schema를 읽은 다음 호출하고, 종료 시 bundle·cleanup 결과를 확인한다.
+- Docker: [컨테이너 실행](references/docker.md)의 이미지와 launcher config를 사용한다.
+- 네이티브 engine: [Hopper](references/providers/hopper.md), [Ghidra](references/providers/ghidra.md), [IDA](references/providers/ida.md) 중 선택한 것만 준비한다.
+- 전체 제품 영역: [기능 경로 색인](references/capabilities.md). 설치된 runtime의 live catalog가 실제 계약이다.
+
+`SKILL_ROOT`는 이 파일이 위치한 실제 절대경로다. 사용자 PATH나 시스템 Node 설정을 임의 변경하지 않는다. 기본 npm 패키지와 특정 source checkout 중 사용자가 선택한 런타임을 유지한다.
 
 ## 대상과 도구 선택
 
@@ -26,7 +46,7 @@ description: REA CLI/MCP와 사용 가능한 Computer Use로 배포 앱·바이�
 | ZIP/APK/IPA/앱 번들의 파일 구성 | `open_binary` → `inspect_artifact` | [네이티브와 패키지](references/native.md) |
 | HAR/SAZ 등 저장된 네트워크 기록 | `inspect_web_network_capture` | [런타임 관찰](references/runtime.md) |
 
-그 밖의 형식은 현재 도구 목록과 해당 REA 가이드에서 지원 여부·호스트·선행 도구를 확인한다. 지원하지 않는 대상을 임의로 다른 형식이나 실행 방식으로 해석하지 않는다.
+그 밖의 형식은 [전체 기능 경로](references/capabilities.md)와 현재 도구 목록에서 지원 여부·호스트·선행 도구를 확인한다. 지원하지 않는 대상을 임의로 다른 형식이나 실행 방식으로 해석하지 않는다.
 
 ## 조사 진행
 
@@ -49,7 +69,7 @@ REA 분석은 로컬에서 수행되지만 결과는 에이전트에 전달된�
 
 결론에 Evidence 또는 화면·행동 기록을 연결하고 확인 범위·반례·남은 질문을 설명한다. 작은 질문은 짧게 답한다. 보고서 요청이나 조사 파일 작성 시 [보고서 템플릿](assets/report-template.md)의 필요한 항목만 사용한다. 자격증명과 명시적 민감값은 재출력하지 않으며, 비민감 출처 값은 임의로 훼손하지 않는다.
 
-구현 요청에서는 관찰된 요구사항과 새 설계 결정을 구분한다. 동작 비교 사례를 검증하고 실행하지 못한 범위를 명시한다. 제한된 사례 통과를 전체 동등성으로 설명하지 않는다.
+구현 요청에서는 관찰된 요구사항과 새 설계 결정을 구분한다. 반복 재구현의 필수 사례가 현재 구현에 대해 검증되었는지 확인하고, 실제 구현·검증 결과·남은 항목을 보고한다. 제한된 사례 통과를 전체 프로그램 동등성으로 설명하지 않는다.
 
 이후에도 필요한 근거는 세션 종료·대상 전환 전에 보존한다. 자신이 연 네이티브 세션은 작업 후 `close_binary`로 정리하되 사용자가 계속 쓰는 브라우저·앱과 연결된 IDA GUI는 유지한다.
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "REA 리버스 엔지니어링"
-  short_description: "배포 앱·바이너리·실제 웹 사용 흐름을 분석하고 근거와 한계를 정리"
-  default_prompt: "Use $reverse-engineer-anything to investigate the selected application or website, exercise the relevant user flow when authorized, and explain its behavior with evidence and explicit unknowns."
+  short_description: "원본을 조사하고 구현·비교·수정을 반복해 지정한 기능을 재현"
+  default_prompt: "Use $reverse-engineer-anything to investigate the selected target and, when reconstruction is requested, implement and compare against the original until the scoped required cases pass or a concrete blocker remains."

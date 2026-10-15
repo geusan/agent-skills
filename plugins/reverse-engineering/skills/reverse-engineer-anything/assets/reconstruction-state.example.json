@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "goal": "사용자가 요청한 기능을 선택한 구현에 재현한다",
+  "scope": ["실제로 재현할 유한한 동작으로 교체"],
+  "non_goals": ["원본 프로그램 전체의 동등성"],
+  "original": {
+    "kind": "observed-service",
+    "identity": "실제 원본 URL·버전 또는 해시·관찰 시각·환경으로 교체",
+    "observation": null
+  },
+  "candidate": {
+    "root": "/absolute/implementation",
+    "include": ["src", "tests", "package.json"],
+    "exclude": [],
+    "snapshot": null
+  },
+  "obligations": [
+    {
+      "id": "feature.behavior",
+      "description": "관찰 가능한 필수 동작으로 교체",
+      "required": true,
+      "case_ids": ["feature.normal", "feature.boundary"]
+    }
+  ],
+  "cases": [
+    {
+      "id": "feature.normal",
+      "scenario": "원본과 구현에 적용할 같은 초기 상태·입력·예상 관찰",
+      "status": "pending",
+      "candidate_snapshot": null,
+      "original_result": null,
+      "candidate_result": null,
+      "comparison": null
+    },
+    {
+      "id": "feature.boundary",
+      "scenario": "이 기능을 구별하는 실제 경계 또는 오류 사례",
+      "status": "pending",
+      "candidate_snapshot": null,
+      "original_result": null,
+      "candidate_result": null,
+      "comparison": null
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "feature.original-behavior",
+      "question": "구현을 위해 아직 확인해야 할 원본 동작은 무엇인가?",
+      "required": true,
+      "status": "open",
+      "resolution": null
+    }
+  ],
+  "blockers": [],
+  "cleanup": {
+    "status": "not-needed",
+    "reason": "초기 템플릿이며 아직 실행 자원을 생성하지 않았다. 실제 작업 후 갱신한다.",
+    "evidence": null
+  },
+  "iterations": [],
+  "next_action": "대상과 필수 동작을 구체화하고 첫 원본 관찰을 확보한다"
+}
