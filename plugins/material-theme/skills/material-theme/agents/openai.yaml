@@ -1,0 +1,4 @@
+interface:
+  display_name: "Material Theme"
+  short_description: "Generate and apply themes from a brand color"
+  default_prompt: "Use $material-theme to generate a light and dark theme from #6750A4 and integrate it with this project's existing styling system."

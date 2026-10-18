@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "material-theme": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/skills/material-theme/scripts/mcp.mjs"]
+    }
+  }
+}

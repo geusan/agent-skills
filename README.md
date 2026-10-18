@@ -1,6 +1,6 @@
 # Agent Skills
 
-Reusable Flutter, native mobile Fastlane setup, Go, Next.js, relational database design, App Store review, and reverse-engineering workflows packaged for both Codex and Claude Code.
+Reusable Flutter, native mobile Fastlane setup, Go, Next.js, relational database design, App Store review, Material themes, and reverse-engineering workflows packaged for both Codex and Claude Code.
 
 The `flutter-clean-arch` plugin includes:
 
@@ -42,6 +42,12 @@ Both skills allow implicit selection for database design, ERD documentation, and
 The `app-store` plugin includes:
 
 - `app-store-review`: prepare TestFlight builds, store metadata and screenshots, privacy disclosures, content rights, age ratings, and release settings using verified app behavior. Includes a dated Hisohiso case reference.
+
+The `material-theme` plugin includes:
+
+- `material-theme`: generate light/dark Material color schemes from a brand color, convert color spaces and harmonies, detect the target framework, and adapt CSS, Tailwind, shadcn/ui, React Native, SwiftUI, Kotlin Compose, Flutter, or JSON theme exports.
+
+Request `브랜드 색상 #6750A4로 이 프로젝트의 라이트·다크 테마를 적용해줘` or `이 색상의 보색과 유사색을 보여줘`. Installing the whole plugin also registers its MCP server in Codex or Claude Code. The plugin includes prebuilt server code and runtime dependencies, so another computer only needs Node.js 22+ on PATH: no separate MCP registration, npm install, build, original checkout, or API key is needed. Copying only the skill folder does not install MCP configuration. Generated code is merged into the existing styling system after checking its version and token conventions. See the [skill](plugins/material-theme/skills/material-theme/SKILL.md) and [installation, runtime, and export constraints](plugins/material-theme/skills/material-theme/references/runtime.md).
 
 The `reverse-engineering` plugin includes:
 
@@ -104,6 +110,7 @@ codex plugin add go-clean-arch@personal
 codex plugin add nextjs-clean-arch@personal
 codex plugin add rdb-design@personal
 codex plugin add app-store@personal
+codex plugin add material-theme@personal
 codex plugin add reverse-engineering@personal
 ```
 
@@ -151,6 +158,10 @@ $app-store:app-store-review 이 앱의 App Store 심사 준비 상태를 확인�
 ```
 
 ```text
+$material-theme:material-theme 브랜드 색상 #6750A4로 이 프로젝트의 라이트·다크 테마를 적용해줘.
+```
+
+```text
 $reverse-engineering:reverse-engineer-anything 선택한 웹사이트에서 검색과 상세 보기를 직접 사용하고, 화면 변화·네트워크 근거·미확인 사항을 정리해줘.
 ```
 
@@ -164,6 +175,7 @@ claude plugin install go-clean-arch@geusan-flutter
 claude plugin install nextjs-clean-arch@geusan-flutter
 claude plugin install rdb-design@geusan-flutter
 claude plugin install app-store@geusan-flutter
+claude plugin install material-theme@geusan-flutter
 claude plugin install reverse-engineering@geusan-flutter
 ```
 
@@ -211,8 +223,38 @@ Start a new Claude Code session or run `/reload-plugins`, then invoke a bundled 
 ```
 
 ```text
+/material-theme:material-theme Apply a light and dark theme from #6750A4 using this project's existing styling system.
+```
+
+```text
 /reverse-engineering:reverse-engineer-anything Trace the clipboard feature in the selected Electron artifact and explain the evidence and remaining unknowns.
 ```
+
+## Run Material themes from a skill
+
+After the changes are available in the marketplace's repository, install `material-theme@personal` in Codex or `material-theme@geusan-flutter` in Claude Code using the commands above. Start a new session or reload plugins; the host starts the bundled MCP server and discovers its four tools. Codex uses a plugin-relative working directory; Claude Code uses its plugin-root variable. No machine-specific path needs to be copied.
+
+For local development before publishing, use the checkout's absolute path as the marketplace source, or launch Claude Code with `--plugin-dir ./plugins/material-theme`. Node.js 22+ must be available to the host process. The original `material-theme-mcp` project is not required.
+
+The included single-call helper also runs directly, without npm or a build:
+
+```bash
+node plugins/material-theme/skills/material-theme/scripts/run-tool.mjs <<'JSON'
+{"tool":"export_theme","arguments":{"color":"#6750A4","format":"css"}}
+JSON
+```
+
+The helper accepts one JSON request on stdin and returns JSON containing code, a suggested path, and integration instructions. It does not write target project files. An application request lets the agent adapt and merge the result. Manual stdio setup for other MCP clients and source snapshot updates are documented in the [runtime guide](plugins/material-theme/skills/material-theme/references/runtime.md).
+
+Maintainers rebuild the committed bundles when changing the runtime:
+
+```bash
+npm ci --include=dev --prefix plugins/material-theme/skills/material-theme/scripts
+npm run build --prefix plugins/material-theme/skills/material-theme/scripts
+npm test --prefix plugins/material-theme/skills/material-theme/scripts
+```
+
+The tests check bundle freshness and relocate the plugin to a temporary directory without node_modules, dist, or npm on PATH. They launch both hosts' MCP configurations and call all four tools and ten export formats. Generated artifacts include dependency license notices and input/output hashes. Platform compilation, visual checks, and execution on other operating systems remain separate checks.
 
 ## Run reverse engineering from a skill
 
@@ -247,6 +289,7 @@ claude --plugin-dir ./plugins/fastlane
 claude --plugin-dir ./plugins/go-clean-arch
 claude --plugin-dir ./plugins/nextjs-clean-arch
 claude --plugin-dir ./plugins/rdb-design
+claude --plugin-dir ./plugins/material-theme
 claude --plugin-dir ./plugins/reverse-engineering
 ```
 
@@ -259,6 +302,7 @@ claude plugin validate ./plugins/go-clean-arch
 claude plugin validate ./plugins/nextjs-clean-arch
 claude plugin validate ./plugins/rdb-design
 claude plugin validate ./plugins/app-store
+claude plugin validate ./plugins/material-theme
 claude plugin validate ./plugins/reverse-engineering
 ```
 

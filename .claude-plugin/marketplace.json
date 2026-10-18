@@ -1,6 +1,6 @@
 {
   "name": "geusan-flutter",
-  "description": "Flutter, native mobile Fastlane setup, Go, Next.js, relational database design, analytics, App Store review, and reverse-engineering skills maintained by geusan.",
+  "description": "Flutter, native mobile Fastlane setup, Go, Next.js, relational database design, analytics, App Store review, Material themes, and reverse-engineering skills maintained by geusan.",
   "owner": {
     "name": "geusan"
   },
@@ -34,6 +34,11 @@
       "name": "app-store",
       "source": "./plugins/app-store",
       "description": "Prepare App Store reviews, Fastlane uploads, privacy disclosures, and release settings."
+    },
+    {
+      "name": "material-theme",
+      "source": "./plugins/material-theme",
+      "description": "Generate and apply cross-platform light and dark themes from a brand color, with a bundled local runtime."
     },
     {
       "name": "reverse-engineering",

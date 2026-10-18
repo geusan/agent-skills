@@ -1,0 +1,104 @@
+{
+  "node": ">=22",
+  "inputs": {
+    "build-plugin.mjs": "5062bb6d49493faca19e9a0e61ad1f4b680f38f5c0e5912ec7477510f68ec933",
+    "mcp.mjs": "8b813bdcbd1ea4a5cc6cb5cda3bf695724ac005ef7ee4503f0484a8a29f60199",
+    "package-lock.json": "90664d8575b70147c133c0bbefad5816cafbbffe1cda82390e744d3f2546465f",
+    "package.json": "bd2ee287413b4303cf938eb6672e1bbe854f4221748e8eaa1028b41563a54bf8",
+    "run-tool.mjs": "525026445375fcab5bb7ab07a946873dc39c06469839fcbc8773408082325699",
+    "src/api.ts": "77c5606e8c47a32b3061b412ad9104e257e47115cdbc8e042a60a404cf1b0449",
+    "src/core/color-utils.ts": "23b873529ac7530dec2fe436dadb0da441ce5c7a3587f1bb145badba211d555c",
+    "src/core/theme.ts": "41124297a8c0e73a6f4c7aa33684eb52d0de55a571197fa101d56861b59e47d8",
+    "src/exporters/css.ts": "9afd871127911134cc34c07503af0428e991e3e56549cfb7003cb71e4527338a",
+    "src/exporters/flutter.ts": "7e293db1f791f53675012f7785050e20d31df505aa6b8f53f2069a8d55301a99",
+    "src/exporters/json.ts": "9b70e1134976c2c25e8c233c73dc966e060a5678ea5e13c6d8c1a6798201e598",
+    "src/exporters/kotlin-compose.ts": "090f7c5fe9c8738298f99b78afcc676140490c0f6e41ead066ea4e9dd9e3e787",
+    "src/exporters/react-native.ts": "a3850ecc118b3c7081fa8dabce874dde013fb82db7ae0add506dd9f4204c6f1e",
+    "src/exporters/shadcn.ts": "e552e667244a4ba6f93c7bd26e4eef92d42d5ba54594f345a7b49c3eed5a7a77",
+    "src/exporters/swift.ts": "6c6549c6d71a1b3aef6d54827941a01429219de367787cbdf2386669ea0ef3bd",
+    "src/exporters/tailwind.ts": "388efb0e422dfc72ef2d290c7cf06d8ddaf62923dfafb31e61553b0c3357230b",
+    "src/index.ts": "b28dda57aaf68ee373891d23a2d1c7e9f5726f75e0421c1c3835c4ae7f5e7272",
+    "src/tools/convert-color.ts": "41bb52f45fb1076ba064108607acda39042cbad2e2bfbae99ee57a8c96e9c2e2",
+    "src/tools/detect-framework.ts": "22cd39dd9a5f7257e0f2b5098fcc2340a6593280b423223c2450c6f99c0b60a6",
+    "src/tools/export-theme.ts": "239b6d53836db060a5162ed8cc425cdffed15419f9f73683b45e182161d928da",
+    "src/tools/generate-theme.ts": "a4fffb1128f7047e240b70c00b575c2fd7eb5512002aa88dc403afd10ce10408",
+    "tsconfig.json": "e84d8c8e23ee784dcd37ce1dba7fe86e2f7e50931f88d2552b5727e4da8c425b"
+  },
+  "dependencies": [
+    {
+      "name": "@material/material-color-utilities",
+      "version": "0.3.0",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@modelcontextprotocol/sdk",
+      "version": "1.27.1",
+      "license": "MIT"
+    },
+    {
+      "name": "ajv",
+      "version": "8.18.0",
+      "license": "MIT"
+    },
+    {
+      "name": "ajv-formats",
+      "version": "3.0.1",
+      "license": "MIT"
+    },
+    {
+      "name": "color",
+      "version": "5.0.3",
+      "license": "MIT"
+    },
+    {
+      "name": "color-convert",
+      "version": "3.1.3",
+      "license": "MIT"
+    },
+    {
+      "name": "color-name",
+      "version": "2.1.0",
+      "license": "MIT"
+    },
+    {
+      "name": "color-string",
+      "version": "2.1.4",
+      "license": "MIT"
+    },
+    {
+      "name": "colorjs.io",
+      "version": "0.5.2",
+      "license": "MIT"
+    },
+    {
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "license": "MIT"
+    },
+    {
+      "name": "fast-uri",
+      "version": "3.1.0",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "name": "json-schema-traverse",
+      "version": "1.0.0",
+      "license": "MIT"
+    },
+    {
+      "name": "zod",
+      "version": "3.25.76",
+      "license": "MIT"
+    },
+    {
+      "name": "zod-to-json-schema",
+      "version": "3.25.1",
+      "license": "ISC"
+    }
+  ],
+  "outputs": {
+    "bundle/server.cjs": "339f30670fc9f9d9fc2e279a35937454587a22572f94432fae799d7f1599aeea",
+    "bundle/tools.cjs": "e7f5e680a2d5d243be14dc1d99f7a0fd4cb3e75d827efd8c78f5f4be3bd59310",
+    "bundle/THIRD_PARTY_NOTICES.txt": "c1c9308d3c0bd7128689058999e4ebe68da0c42d5e5c51b66257730dd4d99473"
+  }
+}

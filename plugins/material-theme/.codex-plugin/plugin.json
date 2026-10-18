@@ -1,0 +1,23 @@
+{
+  "name": "material-theme",
+  "version": "0.1.0",
+  "description": "Generate light and dark Material color themes, convert colors, and export platform-specific theme code from a brand color.",
+  "author": { "name": "geusan", "url": "https://github.com/geusan" },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": ["material-design", "theme", "color", "tailwind", "shadcn", "react-native", "swiftui", "kotlin-compose", "flutter"],
+  "skills": "./skills/",
+  "mcpServers": "./.codex-plugin/mcp.json",
+  "interface": {
+    "displayName": "Material Theme",
+    "shortDescription": "Generate cross-platform themes from a brand color.",
+    "longDescription": "Generate and apply cross-platform light and dark themes from a brand color. Installing the plugin also registers its local MCP server. The prebuilt server includes its runtime dependencies and starts with Node.js 22+ without npm installation, compilation, or an API key.",
+    "developerName": "geusan",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": [
+      "Generate a light and dark theme from #6750A4 for this project's existing styling system.",
+      "Convert this brand color and show its complementary, analogous, and triadic colors."
+    ]
+  }
+}

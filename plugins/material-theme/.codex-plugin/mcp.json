@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "material-theme": {
+      "command": "node",
+      "args": ["./skills/material-theme/scripts/mcp.mjs"],
+      "cwd": "."
+    }
+  }
+}

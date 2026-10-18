@@ -1,0 +1,51 @@
+{
+  "name": "material-theme-skill-runtime",
+  "version": "1.0.0",
+  "description": "Bundled Material theme generator and MCP server for the material-theme skill.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "material-theme-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "mcp",
+    "material-design",
+    "theme",
+    "color",
+    "claude-code",
+    "tailwind",
+    "shadcn",
+    "react-native",
+    "swiftui",
+    "flutter",
+    "kotlin-compose"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc && node build-plugin.mjs",
+    "build:types": "tsc",
+    "check:bundle": "node build-plugin.mjs --check",
+    "dev": "tsc --watch",
+    "test": "npm run build:types && npm run check:bundle && node --test tests/*.test.mjs",
+    "mcp": "node mcp.mjs"
+  },
+  "dependencies": {
+    "@material/material-color-utilities": "^0.3.0",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "color": "^5.0.0",
+    "colorjs.io": "^0.5.2",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "0.28.2",
+    "typescript": "^5.7.0"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "material-theme",
+  "version": "0.1.0",
+  "description": "Generate light and dark Material color themes, convert colors, and export platform-specific theme code from a brand color.",
+  "author": { "name": "geusan" },
+  "homepage": "https://github.com/geusan/agent-skills",
+  "repository": "https://github.com/geusan/agent-skills",
+  "keywords": ["material-design", "theme", "color", "tailwind", "shadcn", "react-native", "swiftui", "kotlin-compose", "flutter"]
+}
